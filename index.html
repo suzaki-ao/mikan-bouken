@@ -1,0 +1,79 @@
+<!DOCTYPE html><html lang="ja"><head><meta charset="utf-8"><title>みかんの大冒険</title>
+<style>
+*{box-sizing:border-box}html,body{margin:0;height:100%;overflow:hidden;background:#000;font-family:'Yu Gothic UI','Meiryo','Hiragino Maru Gothic ProN',sans-serif;color:#fff;user-select:none}
+#c{position:fixed;inset:0;width:100%;height:100%;display:block}
+.hidden{display:none!important}
+.t{text-shadow:0 0 3px #3a1d00,0 0 3px #3a1d00,0 2px 2px #3a1d00}
+.bar{position:relative;border:3px solid #f3e1b0;border-radius:10px;background:#3b2a1a;box-shadow:0 2px 6px #0008;overflow:hidden}
+.bar i{position:absolute;left:0;top:0;bottom:0;display:block;border-radius:6px}
+.bar b{position:absolute;inset:0;text-align:center;font-size:14px;line-height:inherit;font-weight:700}
+#hp{width:340px;height:30px}#hp i{background:linear-gradient(#ffe45a,#ff9a1a 60%,#e8650c);width:100%}
+#st{width:240px;height:14px;margin-top:6px;border-width:2px}#st i{background:linear-gradient(#b8f56a,#4fc23a);width:100%}
+#spb{width:200px;height:12px;margin-top:5px;border-width:2px}#spb i{background:linear-gradient(#fff2a0,#ff9a20);width:0}#spb b{font-size:10px;line-height:8px}
+.tag{position:fixed;transform:translate(-50%,-50%);font-size:14px;font-weight:800;color:#fff;background:#0007;border:1px solid #ffd23a88;border-radius:10px;padding:1px 8px;pointer-events:none;white-space:nowrap;text-shadow:0 1px 2px #000}
+.eb{overflow:visible}.eb u{position:absolute;left:50%;bottom:12px;transform:translateX(-50%);white-space:nowrap;font:700 12px sans-serif;text-decoration:none;text-shadow:0 0 3px #000,0 0 3px #000}
+#tod{margin-top:4px;font-size:15px;font-weight:700}
+#hudL{position:fixed;left:18px;top:18px}
+#lv{margin-top:6px;font-size:16px;font-weight:700}
+#ex{width:200px;height:8px;border-width:2px;margin-top:3px}#ex i{background:linear-gradient(#9fe4ff,#3a9de8);width:0}
+#hudR{position:fixed;right:18px;top:18px;text-align:right;width:260px}
+#mm{width:170px;height:170px;border-radius:50%;border:4px solid #f3e1b0;box-shadow:0 2px 8px #0009;background:#222}
+#quest{margin-top:10px;background:#0007;border:2px solid #f3e1b0aa;border-radius:10px;padding:8px 10px;font-size:14px;text-align:left;line-height:1.5}
+#quest b{color:#ffd23a}
+#hudB{position:fixed;left:50%;bottom:18px;transform:translateX(-50%);display:flex;gap:10px}
+.slot{width:64px;height:64px;border:3px solid #f3e1b0;border-radius:12px;background:#3b2a1acc;text-align:center;font-size:12px;padding-top:4px;line-height:1.2}
+.slot big{display:block;font-size:24px}.slot em{font-style:normal;color:#ffd23a;font-weight:700}
+#hudBL{position:fixed;left:18px;bottom:18px;font-size:15px;line-height:1.6}
+#prompt{position:fixed;left:50%;top:62%;transform:translateX(-50%);background:#000a;border:2px solid #ffd23a;border-radius:20px;padding:6px 18px;font-size:18px}
+#toasts{position:fixed;left:50%;top:14%;transform:translateX(-50%);text-align:center;pointer-events:none}
+.toast{font-size:22px;font-weight:800;margin:4px;color:#fff3c0;animation:fi .3s}
+@keyframes fi{from{opacity:0;transform:translateY(-8px)}}
+.dmg{position:fixed;font-weight:900;font-size:30px;color:#ffd23a;-webkit-text-stroke:2px #5a2d00;pointer-events:none;transform:translate(-50%,-50%)}
+.dmg.p{color:#ff6a5a}.dmg.h{color:#7dff7d}.dmg.c{font-size:42px;color:#fff06a}
+.eb{position:fixed;width:80px;height:10px;border:2px solid #f3e1b0;border-radius:4px;background:#2a1a0a;transform:translate(-50%,-50%);pointer-events:none}
+.eb i{display:block;height:100%;background:linear-gradient(#ffe45a,#ff9a1a)}
+#boss{position:fixed;left:50%;bottom:110px;transform:translateX(-50%);width:560px;text-align:center}#xh{position:fixed;left:50%;top:50%;transform:translate(-50%,-50%);font-size:30px;font-weight:900;color:#fff;text-shadow:0 0 4px #000;pointer-events:none}#shopp{max-height:78vh;overflow:auto}#invp{max-height:84vh;overflow:auto}
+#boss .bar{height:22px;margin-top:4px}#boss i{background:linear-gradient(#ff8a7a,#c01e1e);width:100%}
+#vig{position:fixed;inset:0;pointer-events:none;box-shadow:inset 0 0 160px 40px #f00;opacity:0;transition:opacity .4s}
+#fade{position:fixed;inset:0;background:#000;opacity:0;pointer-events:none;transition:opacity .8s}
+.ov{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:#000a}
+.panel{background:#4a3320f2;border:4px solid #f3e1b0;border-radius:16px;padding:20px 26px;min-width:420px;max-width:760px;box-shadow:0 6px 30px #000a}
+.panel h2{margin:0 0 10px;color:#ffd23a}
+button.b{font:inherit;font-size:18px;font-weight:700;color:#fff;background:linear-gradient(#ffa63a,#e8650c);border:3px solid #f3e1b0;border-radius:12px;padding:8px 18px;margin:5px;cursor:pointer}
+button.b:hover{filter:brightness(1.15)}button.b:disabled{filter:grayscale(1) brightness(.7);cursor:default}
+#title{position:fixed;inset:0;background:#000 url(assets/battle.jpg) center/cover;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px}
+#title:before{content:'';position:absolute;inset:0;background:radial-gradient(#0000,#000a)}
+#title *{position:relative}
+#title h1{font-size:92px;margin:0;color:#ff7a1a;-webkit-text-stroke:6px #fff;paint-order:stroke fill;text-shadow:0 6px 0 #c04a00,0 10px 24px #000a;letter-spacing:6px}
+#title p{margin:0 0 14px;font-size:22px;color:#fff;text-shadow:0 2px 6px #000}
+#cap{position:fixed;left:50%;top:50%;transform:translate(-50%,-50%);background:#000a;padding:14px 26px;border-radius:14px;font-size:22px;border:2px solid #ffd23a}
+#dlg{position:fixed;left:50%;bottom:50px;transform:translateX(-50%);width:760px;background:#4a3320f2;border:4px solid #f3e1b0;border-radius:16px;padding:16px 22px;font-size:20px;line-height:1.6}
+#dlg h3{margin:0 0 4px;color:#ffd23a;font-size:18px}
+#mapc{background:#1a1208;border:4px solid #f3e1b0;border-radius:12px;cursor:pointer}
+.row{display:flex;justify-content:space-between;gap:14px;align-items:center;padding:4px 0;font-size:17px}
+#err{position:fixed;left:0;top:0;right:0;background:#a00;color:#fff;font:12px monospace;padding:4px;z-index:99;white-space:pre-wrap}
+</style></head><body>
+<canvas id="c"></canvas>
+<div id="hud" class="hidden">
+ <div id="hudL"><div class="bar" id="hp"><i id="hpf"></i><b class="t" id="hpt"></b></div><div class="bar" id="st"><i id="stf"></i></div><div class="bar" id="spb"><i id="spf"></i><b class="t" id="spt"></b></div>
+  <div id="lv" class="t"></div><div class="bar" id="ex"><i id="exf"></i></div></div>
+ <div id="hudR"><canvas id="mm" width="170" height="170"></canvas><div id="tod" class="t"></div><div id="quest"></div></div>
+ <div id="hudBL" class="t"><div id="gold"></div><div id="wep"></div></div>
+ <div id="hudB"><div class="slot" id="s1"></div><div class="slot" id="s2"></div><div class="slot" id="s3"></div><div class="slot" id="s4"></div><div class="slot" id="s5"></div></div>
+ <div id="prompt" class="hidden"></div><div id="toasts"></div>
+ <div id="boss" class="hidden"></div><div id="xh" class="hidden">＋</div>
+ <div id="vig"></div>
+</div>
+<div id="cap" class="hidden t">クリックでマウス操作を開始</div>
+<div id="dlg" class="hidden"></div>
+<div id="fade"></div>
+<div id="title"><h1>みかんの大冒険</h1><p id="tsub">読み込み中…</p>
+ <div id="tbtn" class="hidden"><button class="b" id="bnew">はじめから</button><button class="b" id="bcont">つづきから</button><br><button class="b" id="bcheat" style="background:linear-gradient(#b060ff,#6a20c0)">🛠 チートモードではじめる</button><button class="b" id="bcheatc" style="background:linear-gradient(#b060ff,#6a20c0)">チート(つづき)</button></div>
+ <p style="font-size:15px;margin-top:20px">WASD移動 / マウス視点 / 左クリック攻撃 / 右クリック防御 / Space ジャンプ / Shift 回避 / E 調べる / Q 必殺技 / Tab マップ / I 持ち物</p></div>
+<div id="menu" class="ov hidden"><div class="panel"><h2>ポーズ</h2><button class="b" id="mres">再開</button><button class="b" id="msave">セーブ</button><button class="b" id="mquit">ゲームを終了</button>
+ <div style="margin-top:10px;font-size:15px;line-height:1.7">W/A/S/D 移動　マウス カメラ　左クリック 攻撃(3段コンボ)　右クリック ガード<br>Space ジャンプ　Shift 回避　E 調べる・会話　Q 必殺技 / R 武器切替 / H ヘリ(チート) / F 矢の種類 / 弓は長押しで引く　Tab マップ(クリックでピン)　I 持ち物　1〜4 アイテム　M 音</div></div></div>
+<div id="inv" class="ov hidden"><div class="panel" id="invp"></div></div>
+<div id="map" class="ov hidden"><div class="panel" style="padding:12px"><canvas id="mapc" width="640" height="640"></canvas><div style="font-size:14px;margin-top:6px">左クリック：解放済みの祠(青)は2回クリックでファストトラベル／それ以外の場所は📍ピンを立てる　右クリック：ピンを消す　⭐＝次の目的地　Tab で閉じる <button class="b" id="pinclr" style="font-size:13px;padding:2px 10px">ピンを消す</button></div></div></div>
+<div id="shop" class="ov hidden"><div class="panel" id="shopp"></div></div>
+<script>(function(){var L=["three.min.js","core.js","ents.js","dungeon.js","boss.js","main.js"],i=0;function nx(){if(i>=L.length)return;var s=document.createElement("script");s.src=L[i++];s.onload=function(){document.getElementById("tsub").textContent="世界を作っています… ("+i+"/"+L.length+")";setTimeout(nx,30)};s.onerror=function(){document.getElementById("tsub").textContent="読み込み失敗: "+s.src};document.body.appendChild(s)}requestAnimationFrame(function(){requestAnimationFrame(function(){setTimeout(nx,80)})})})()</script>
+</body></html>
